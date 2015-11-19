@@ -424,12 +424,18 @@ function resolveInternalDomFragment(fragmentRef: RenderFragmentRef): Node[] {
   return (<DefaultRenderFragmentRef<Node>>fragmentRef).nodes;
 }
 
+/**
+ * Given a sibling and a set of nodes, move the nodes to be after
+ * the sibling in the DOM.
+ */
 function moveNodesAfterSibling(sibling, nodes) {
+  let sib = sibling;
+
   if (nodes.length > 0 && isPresent(DOM.parentElement(sibling))) {
     for (var i = 0; i < nodes.length; i++) {
-      DOM.insertBefore(sibling, nodes[i]);
+      DOM.insertAfter(sib, nodes[i]);
+      sib = nodes[i];
     }
-    DOM.insertBefore(nodes[0], sibling);
   }
 }
 
